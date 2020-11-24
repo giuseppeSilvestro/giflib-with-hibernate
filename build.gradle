@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+id 'idea'
+id 'eclipse'
+id 'org.springframework.boot' version '2.0.6.RELEASE'
+id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+group 'com.teamtreehouse'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+// Specify the location where our dependencies will be found
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.6.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.0.6.RELEASE'
+    compile group: 'org.hashids', name: 'hashids', version: '1.0.1'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.2.5.RELEASE'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.1.Final'
+    compile group: 'org.apache.tomcat', name: 'tomcat-dbcp', version: '8.0.32'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.191'
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: '3.0.11.RELEASE'
+
+}
