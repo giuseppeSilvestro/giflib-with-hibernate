@@ -1,6 +1,7 @@
 package com.teamtreehouse.giflib.web.controller;
 
 import com.teamtreehouse.giflib.model.Category;
+import com.teamtreehouse.giflib.service.CategoryService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,25 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private CategoryService categoryService;
 
     // Index of all categories
     @RequestMapping("/categories")
     public String listCategories(Model model) {
         // TODO: Get all categories
-        Session session = sessionFactory.openSession();
-        CriteriaQuery<Category> criteriaQuery = session.getCriteriaBuilder().createQuery(Category.class);
-        criteriaQuery.from(Category.class);
 
-        List<Category> categories = session.createQuery(criteriaQuery).getResultList();
+        /*
+        the next commented lines are the implementation if we do not use the DAO and Service packages
+        that we have just coded. If you want to use them, move the @Autowired outside the method.
+         */
+//        @Autowired
+//        private SessionFactory sessionFactory;
+//        Session session = sessionFactory.openSession();
+//        CriteriaQuery<Category> criteriaQuery = session.getCriteriaBuilder().createQuery(Category.class);
+//        criteriaQuery.from(Category.class);
+//        List<Category> categories = session.createQuery(criteriaQuery).getResultList();
+
+        List<Category> categories = categoryService.findAll();
         model.addAttribute("categories",categories);
         return "category/index";
     }
