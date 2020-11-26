@@ -3,6 +3,7 @@ package com.teamtreehouse.giflib.web.controller;
 import com.teamtreehouse.giflib.model.Category;
 import com.teamtreehouse.giflib.service.CategoryService;
 import com.teamtreehouse.giflib.web.Color;
+import com.teamtreehouse.giflib.web.FlashMessage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +94,16 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.category", result);
             // Add category if invalid was received
             redirectAttributes.addFlashAttribute("category", category);
+            // Add flash message to inform the user about the failure of the operation
+            redirectAttributes.addFlashAttribute("flash",
+                    new FlashMessage("Category not added... Please follow the instructions", FlashMessage.Status.FAILURE));
             // Redirect back to the form
             return "redirect:/categories/add";
         }
         categoryService.save(category);
+
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("Category successfully added!", FlashMessage.Status.SUCCESS));
         // TODO: Redirect browser to /categories
         return "redirect:/categories";
     }
