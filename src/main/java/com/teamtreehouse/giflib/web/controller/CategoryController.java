@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.validation.Valid;
@@ -59,7 +60,9 @@ public class CategoryController {
     @RequestMapping("categories/add")
     public String formNewCategory(Model model) {
         // TODO: Add model attributes needed for new form
-        model.addAttribute("category", new Category());
+        if (!model.containsAttribute("category")) {
+            model.addAttribute("category", new Category());
+        }
         model.addAttribute("colors", Color.values());
         return "category/form";
     }
@@ -83,9 +86,11 @@ public class CategoryController {
 
     // Add a category
     @RequestMapping(value = "/categories", method = RequestMethod.POST)
-    public String addCategory(@Valid Category category, BindingResult result) {
+    public String addCategory(@Valid Category category, BindingResult result, RedirectAttributes redirectAttributes) {
         // TODO: Add category if valid data was received
         if (result.hasErrors()) {
+            // Add category if invalid was received
+            redirectAttributes.addFlashAttribute("category", category);
             // Redirect back to the form
             return "redirect:/categories/add";
         }
