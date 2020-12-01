@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,9 +131,10 @@ public class GifController {
     @RequestMapping(value = "/gifs/{gifId}/favorite", method = RequestMethod.POST)
     public String toggleFavorite(@PathVariable Long gifId) {
         // TODO: With GIF whose id is gifId, toggle the favorite field
-
+        Gif gif = gifService.findById(gifId);
+        gifService.toggleFavorite(gif);
         // TODO: Redirect to GIF's detail view
-        return null;
+        return "redirect:/";
     }
 
     // Search results
